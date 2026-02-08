@@ -16,7 +16,7 @@ npm run build
 docker build -t blog-frontend .
 ``` 
 
-# Intalltion
+# Intallation
 
 Start the application with the following commands:
 
