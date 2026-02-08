@@ -1,46 +1,49 @@
-version: '3.7'
 services:
-    blog_db:
-        image: mysql
-        container_name: "blog_db"
-        #ports:
-        #    - "3306:3306"
+    blog-database:
+        image: mysql:8.0
+        container_name: "blog-database"
+        ports:
+            - "3306:3306"
         environment:
-            - MYSQL_ROOT_PASSWORD=#your password#
+            - MYSQL_ROOT_PASSWORD=123456
         volumes:
-            #- type: bind
-              #source: /home/runqi/Workspace/Blog/db/
-              #target: /docker-entrypoint-initdb.d/
             - type: bind
-              source: /srv/blogdb
+              source: ./blog-database
+              target: /docker-entrypoint-initdb.d
+            - type: bind
+              source: /opt/blog-app/database
               target: /var/lib/mysql
-    blog_backend:
-        image: runqi/blog_backend
-        container_name: "blog_backend"
-        #ports:
-        #    - "5000:5000"
+    blog-backend:
+        image: blog-backend
+        container_name: "blog-backend"
+        environment:
+            - DB_HOST=blog-database
+            - DB_PORT=3306
+            - DB_NAME=blog
+            - DB_USER=root
+            - DB_PASSWORD=123456
         depends_on:
-            - "blog_db"
+            - "blog-database"
         links:
-            - "blog_db"
-    blog_front:
-        image: runqi/blog_front
-        container_name: "blog_front"
+            - "blog-database"
+    blog-frontend:
+        image: blog-frontend
+        container_name: "blog-frontend"
         ports:
             - "80:80"
         depends_on:
-            - "blog_db"
-            - "blog_backend"
+            - "blog-database"
+            - "blog-backend"
         links:
-            - "blog_backend"
+            - "blog-backend"
         volumes:
             - type: bind
-              source: /srv/blog_share
+              source: /opt/blog-app/blog_share
               target: /srv/blog_share
             - type: bind
-              source: /srv/blog_live
+              source: /opt/blog-app/blog_live
               target: /srv/blog_live
             - type: bind
-              source: /srv/blog_content
+              source: /opt/blog-app/blog_content
               target: /srv/blog_content
 

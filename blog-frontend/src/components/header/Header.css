@@ -1,0 +1,29 @@
+.BlogHeader{
+	width:100%;
+	padding-bottom: 28.8%;
+	position: relative;
+	/*background: green;*/
+}
+
+.RowHeight{
+	height: 80px;
+}
+
+.RowTextHeight{
+	line-height: 80px;
+}
+
+.MenuFontStyle {
+	line-height: 2.5em;
+	vertical-align: middle;
+	padding: 0.5em 0.5em;
+	text-align: center;
+	display: inline;
+	font-size: min(4vw, 1.4em);
+	color: #DCDCDC;
+}
+
+.MenuFontStyle:hover {
+	color: #0099ff;
+	border-bottom: 2px solid;
+}
